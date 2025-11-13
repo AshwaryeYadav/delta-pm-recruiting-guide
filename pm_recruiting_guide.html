@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Delta Consulting · PM Recruiting Guide</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      /* Delta Consulting actual color palette - matching delta.studentorg.berkeley.edu */
+      --bg: #00957A;          /* Dark green (primary) */
+      --bg-alt: #005749;      /* Deeper dark green */
+      --accent: #FFD700;      /* Gold accent for contrast */
+      --accent-light: #FFE08A; /* Light gold/yellow */
+      --accent-green: #9AD8CE; /* Light green accent */
+      --bg-light: #E8F5F3;    /* Very light green background */
+      --text: #ffffff;        /* white text */
+      --muted: #C8E8E0;       /* light green for secondary text */
+      --border: #007A65;      /* medium green borders */
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background: radial-gradient(circle at top, #005749 0, #003d30 55%);
+      color: var(--text);
+      overflow: hidden;
+    }
+
+    .deck {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      padding: clamp(2.5rem, 6vw, 5rem) clamp(3rem, 6vw, 5.5rem) clamp(4rem, 9vh, 6rem);
+      display: none;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: clamp(1.5rem, 4vh, 2.5rem);
+      overflow-y: auto;
+      background: linear-gradient(135deg, var(--bg) 0%, var(--bg-alt) 100%);
+    }
+
+    .slide.active {
+      display: flex;
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .slide-header {
+      margin-bottom: 1.75rem;
+    }
+
+    .overline {
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      font-size: 0.85rem;
+      color: var(--accent);
+      opacity: 0.95;
+      margin-bottom: 0.75rem;
+    }
+
+    h1, h2 {
+      font-weight: 700;
+      line-height: 1.1;
+    }
+
+    h1 {
+      font-size: clamp(2.75rem, 4.5vw, 4rem);
+    }
+
+    h2 {
+      font-size: clamp(2.25rem, 3.5vw, 3rem);
+    }
+
+    .subtitle {
+      margin-top: 1rem;
+      font-size: 1.1rem;
+      max-width: 45rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .content {
+      flex: 1;
+      display: flex;
+      flex-wrap: wrap;
+      align-content: flex-start;
+      margin-top: 0.75rem;
+      gap: 2.5rem;
+    }
+
+    .col {
+      flex: 1;
+      min-width: min(380px, 100%);
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    ul {
+      list-style: none;
+      font-size: 1.15rem;
+      line-height: 1.75;
+    }
+
+    li {
+      position: relative;
+      padding-left: 2rem;
+      margin-bottom: 1rem;
+      font-size: 1.15rem;
+      line-height: 1.75;
+    }
+
+    li::before {
+      content: "•";
+      position: absolute;
+      left: 0.3rem;
+      top: 0.05rem;
+      color: var(--accent);
+      font-size: 1.5rem;
+      font-weight: bold;
+      line-height: 1;
+    }
+    
+    /* Make bullets in direct content columns even larger */
+    .content > .col > ul {
+      font-size: 1.25rem;
+    }
+    
+    .content > .col > ul li {
+      font-size: 1.25rem;
+      margin-bottom: 1.1rem;
+      padding-left: 2.2rem;
+      line-height: 1.8;
+    }
+    
+    .content > .col > ul li::before {
+      font-size: 1.7rem;
+      left: 0.2rem;
+      color: var(--accent);
+    }
+
+    .hint {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-top: 1.25rem;
+      line-height: 1.6;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .pill {
+      font-size: 0.95rem;
+      padding: 0.4rem 0.8rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 224, 138, 0.6);
+      background: rgba(0, 149, 122, 0.8);
+      color: var(--accent);
+      white-space: nowrap;
+    }
+
+    .nav {
+      position: absolute;
+      inset-inline: 0;
+      bottom: 1.4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-inline: clamp(1.5rem, 5vw, 3rem);
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    button.nav-btn {
+      border-radius: 999px;
+      border: 1px solid rgba(255, 224, 138, 0.5);
+      background: rgba(0, 149, 122, 0.9);
+      padding: 0.35rem 0.8rem;
+      color: var(--text);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 0.8rem;
+      transition: all 0.2s ease;
+    }
+    
+    button.nav-btn:hover:not(:disabled) {
+      background: rgba(0, 149, 122, 1);
+      border-color: var(--accent);
+    }
+
+    button.nav-btn span.icon {
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    button.nav-btn:disabled {
+      opacity: 0.3;
+      cursor: default;
+    }
+
+    .progress {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .progress-bar {
+      width: 150px;
+      max-width: 40vw;
+      height: 4px;
+      background: rgba(0, 87, 73, 0.8);
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 224, 138, 0.4);
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-light));
+      transition: width 0.25s ease-out;
+    }
+
+    .slide-count {
+      font-variant-numeric: tabular-nums;
+    }
+
+    .tagline {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .card {
+      border-radius: 1rem;
+      border: 1px solid rgba(255, 224, 138, 0.5);
+      padding: 1.6rem 1.8rem;
+      background: linear-gradient(135deg, rgba(0, 149, 122, 0.85) 0%, rgba(0, 87, 73, 0.95) 100%);
+      font-size: 1.05rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      backdrop-filter: blur(10px);
+    }
+
+    .card-title {
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+      font-weight: 600;
+    }
+
+    .text-block {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: var(--muted);
+    }
+
+    .text-block strong {
+      color: var(--accent);
+    }
+
+    .two-column-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem 1.5rem;
+      margin-top: 0.75rem;
+    }
+
+    .inline-accent {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .link-row {
+      margin-top: 0.75rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .link-row span {
+      display: inline-block;
+      margin-right: 0.5rem;
+    }
+
+    /* President intro slide */
+
+    .president-slide {
+      background: linear-gradient(135deg, var(--bg) 0%, var(--bg-alt) 100%);
+    }
+
+    .president-layout {
+      align-items: center;
+    }
+
+    .president-card {
+      background: linear-gradient(135deg, rgba(0, 149, 122, 0.95) 0%, rgba(0, 87, 73, 0.98) 100%);
+      border: 2px solid rgba(255, 224, 138, 0.7);
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.6);
+    }
+
+    .president-photo-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .president-photo-frame {
+      width: min(260px, 70vw);
+      aspect-ratio: 3 / 4;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      border: 3px solid var(--accent-light);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+      background: var(--bg-alt);
+    }
+
+    .president-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .slide {
+        padding: 2.5rem 1.5rem 3rem;
+      }
+      .content {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+      .president-layout {
+        flex-direction: column-reverse;
+        gap: 1.5rem;
+      }
+      .president-photo-frame {
+        width: min(220px, 70vw);
+      }
+      .president-slide .slide-header h1 {
+        font-size: 2.1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="deck">
+    <!-- NEW Slide 1: President Intro -->
+    <section class="slide active president-slide">
+      <div class="slide-header">
+        <div class="overline">Delta Consulting · Executive Board</div>
+        <h1>Meet Our President</h1>
+      </div>
+
+      <div class="content president-layout">
+        <div class="col">
+          <div class="card president-card">
+            <div class="card-title">President of Delta</div>
+            <h2 style="margin-bottom:0.5rem;">Nithika "Nikki" Valluri</h2>
+            <p style="font-size:1rem; line-height:1.6; margin-bottom:1rem; color:var(--accent-light);">
+              Ex @ ServiceNow
+            </p>
+          </div>
+        </div>
+
+        <div class="col president-photo-col">
+          <div class="president-photo-frame">
+            <img
+              src="nithika-valluri.webp"
+              alt="Nithika Valluri, President of Delta Consulting"
+              class="president-photo"
+            />
+          </div>
+        </div>
+      </div>
+
+      <p class="hint">
+        Use ← → to explore Delta's Product Management recruiting guide.
+      </p>
+    </section>
+
+    <!-- Slide 2: Title -->
+    <section class="slide">
+      <div>
+        <div class="overline">PM Recruiting Guide</div>
+        <h1>Breaking Into Product Management</h1>
+        <p class="subtitle">
+          A practical guide for APM / PM internship &amp; new-grad recruiting:
+          how to find roles, position your story, prep for interviews, and stay
+          sane through the process.
+        </p>
+      </div>
+
+      <div class="content">
+        <div class="col">
+          <div class="card">
+            <div class="card-title">What This Is</div>
+            <ul>
+              <li>A student-focused playbook for PM recruiting.</li>
+              <li>Based on real experiences, not just theory.</li>
+              <li>Designed for APM, PM intern, and early-career PM roles.</li>
+              <li>For anyone feeling like the process is confusing, gate-kept, or "reserved" for people with magical backgrounds.</li>
+              <li>This is not a perfect, official playbook — it's a consolidation of what works.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <div class="card-title">You'll Learn To</div>
+            <ul>
+              <li>Find and track PM / APM opportunities systematically.</li>
+              <li>Turn Delta &amp; project work into PM-ready experience.</li>
+              <li>Position your resume, LinkedIn, and Delta work for PM roles.</li>
+              <li>Prep for product sense, execution, and behavioral rounds.</li>
+              <li>Handle stress, rejection, and offers strategically.</li>
+              <li>Build a supportive network and stay sane through the chaos.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <p class="hint">Tip: Use ← → arrow keys to move between slides. Use this as a starting point — then tweak it to match your story.</p>
+    </section>
+
+    <!-- Slide 3: What PM Is -->
+    <section class="slide">
+      <div class="slide-header">
+        <div class="overline">01 · Role Overview</div>
+        <h2>What Does a Product Manager Actually Do?</h2>
+        <p class="subtitle">
+          PMs sit at the intersection of <span class="inline-accent">
+          business, design, and engineering</span> — deciding what to build,
+          why it matters, and how to measure success.
+        </p>
+      </div>
+      <div class="content">
+        <div class="col">
+          <ul>
+            <li>Own problems, not just features.</li>
+            <li>Deeply understand users and their pain points.</li>
+            <li>Define requirements, scope, and success metrics.</li>
+            <li>Prioritize roadmaps under real constraints.</li>
+          </ul>
+        </div>
+        <div class="col">
+          <ul>
+            <li>Collaborate with eng, design, data, and stakeholders.</li>
+            <li>Launch features and track impact over time.</li>
+            <li>Communicate clearly across technical + non-technical teams.</li>
+            <li>Make trade-offs and say “no” thoughtfully.</li>
+          </ul>
+        </div>
+      </div>
+      <p class="hint">
+        Mental model: PM = “CEO of the problem,” not CEO of the team.
+      </p>
+    </section>
+
+    <!-- Slide 4: Landscape & Reality -->
+    <section class="slide">
+      <div class="slide-header">
+        <div class="overline">01 · Role Overview</div>
+        <h2>The Reality of PM Recruiting</h2>
+        <p class="subtitle">
+          PM roles are fewer and more opaque than SWE, but you don't need a
+          "perfect" background. You need a clear story and proof you can own
+          problems and drive outcomes.
+        </p>
+      </div>
+      <div class="content">
+        <div class="col">
+          <div class="card">
+            <div class="card-title">The Challenge</div>
+            <ul>
+              <li>APM / PM intern seats are limited and competitive.</li>
+              <li>Titles vary: APM, RPM, PM intern, Rotational PM, Product Fellow, etc.</li>
+              <li>PM recruiting is way more opaque than SWE — fewer roles, weird titles.</li>
+              <li>Most PMs break in from other roles (SWE, design, consulting, etc.).</li>
+              <li>This is even more of a numbers + timing game than SWE.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <div class="card-title">Your Strategy</div>
+            <ul>
+              <li>Your goal: show <span class="inline-accent">PM-ish work</span>, not just PM titles.</li>
+              <li>Delta, side projects, internships → all can be packaged as product experience.</li>
+              <li>Companies care that you've done PM-ish work, not what it was called.</li>
+              <li>Examples: owned a feature/roadmap, led research→prototype→launch, ran user interviews, prioritized backlog items.</li>
+              <li>This guide helps you translate what you've already done.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 5: Finding Roles -->
+    <section class="slide">
+      <div class="slide-header">
+        <div class="overline">02 · Finding Opportunities</div>
+        <h2>Where PM / APM Roles Actually Live</h2>
+        <p class="subtitle">
+          PM jobs hide behind confusing titles and random portals. Set up a
+          system so you're not relying on luck.
+        </p>
+      </div>
+      <div class="content">
+        <div class="col">
+          <div class="card">
+            <div class="card-title">Core Sources</div>
+            <ul>
+              <li><strong>APM List (by Exponent)</strong> — curated list of APM programs & entry-level PM roles.</li>
+              <li><strong>APM Season</strong> — tracks 2025–2026 APM internships & full-time roles with open/closed status.</li>
+              <li><strong>Simplify / Leland</strong> — "Top APM Programs" collections you can filter.</li>
+              <li>Company career pages for "Associate Product Manager," "PM Intern," etc.</li>
+              <li>LinkedIn + Handshake with PM-specific filters.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <div class="card-title">Tactics</div>
+            <ul>
+              <li>Treat these like SWE GitHub internship lists: open them daily/weekly during season.</li>
+              <li>Apply to anything that says: APM, RPM, Product Manager – New Grad, PM Intern.</li>
+              <li>Build a shortlist of 20–40 target companies where you like the product.</li>
+              <li>Check their career pages weekly or set alerts.</li>
+              <li>Track roles in a simple spreadsheet (status, deadline, contacts).</li>
+              <li><strong>Goal:</strong> A recurring habit of checking these like you'd check social media.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 6: APM Programs -->
+    <section class="slide">
+      <div class="slide-header">
+        <div class="overline">02 · Finding Opportunities</div>
+        <h2>Flagship APM Programs</h2>
+        <p class="subtitle">
+          The "big name" programs are great, but they're not the only path into PM.
+        </p>
+      </div>
+      <div class="content">
+        <div class="col">
+          <div class="card">
+            <div class="card-title">Major Programs</div>
+            <ul>
+              <li><strong>Google APM</strong> — 2-year rotational program; classic new-grad PM track.</li>
+              <li><strong>Meta RPM</strong> — 18-month rotational program with 3 rotations, bootcamp, and often a global trip.</li>
+              <li><strong>Uber, LinkedIn, Salesforce, Figma, Duolingo APM</strong> — similar early-career programs with rotations, mentorship, and structured training.</li>
+              <li>Typically 18–24 month rotational programs with intense mentorship.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <div class="card-title">Reality Check</div>
+            <ul>
+              <li>These are insanely competitive — APM is multiple-x harder than SWE to break into.</li>
+              <li>Many APM programs have tiny headcounts but thousands of applicants.</li>
+              <li>Don't measure your worth only by these programs.</li>
+              <li>Your strategy: apply broadly, not just to famous APM programs.</li>
+              <li>Remember: most PMs break in from other roles, not directly from APM programs.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="pill-row">
+        <span class="pill">APM</span>
+        <span class="pill">Rotational PM</span>
+        <span class="pill">PM Intern</span>
+        <span class="pill">New-Grad PM</span>
+        <span class="pill">Product Fellow</span>
+      </div>
+    </section>
+
+    <!-- Slide 7: Referrals -->
+    <section class="slide">
+      <div class="slide-header">
+        <div class="overline">03 · Referrals & Outreach</div>
+        <h2>Getting PM Referrals That Actually Land Screens</h2>
+        <p class="subtitle">
+          Referrals matter even more when there are fewer seats. Target the right
+          people and make it easy to help you.
+        </p>
+      </div>
+      <div class="content">
+        <div class="col">
+          <div class="card">
+            <div class="card-title">Finding the Right People</div>
+            <ul>
+              <li>Prioritize PMs/APMs at your target companies as your #1 outreach list.</li>
+              <li>Search by title: "Product Manager", "Associate PM", "Rotational PM", "Product Analyst".</li>
+              <li>Layer on school / club filters: Google "site:linkedin.com 'Associate Product Manager' 'UC Berkeley'".</li>
+              <li>Use APM alumni lists / LinkedIn to find Cal → APM pipelines.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <div class="card-title">Making It Easy</div>
+            <ul>
+              <li>Send concise messages: who you are, why this company, 1–2 relevant experiences.</li>
+              <li>Have ready to send in one message: PDF resume, direct job link, 3–4 sentence "blurb" they can paste into the referral form.</li>
+              <li>Always thank them, regardless of outcome.</li>
+              <li>Referrals matter a lot in PM because the funnel is smaller and more manually screened than SWE.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <p class="hint">Goal: be the easiest referral they make all week.</p>
+    </section>
+
+    <!-- Slide 8: Outreach Template -->
+    <section class="slide">
+      <div class="slide-header">
+        <div class="overline">03 · Referrals & Outreach</div>
+        <h2>Example PM Outreach Message</h2>
+      </div>
+      <div class="content">
+        <div class="col">
+          <div class="card">
+            <div class="card-title">Template</div>
+            <p style="font-size:1.05rem; line-height:1.7;">
+              Hi [Name],<br/><br/>
+              I'm [Your Name], a [year] at UC Berkeley studying [major], and I'm
+              really interested in the [APM / PM Intern / New Grad PM] role at
+              [Company].<br/><br/>
+              This past semester in Delta Consulting I [1-sentence PM-ish project
+              summary], and I'd love to learn more about how PMs at [Company]
+              think about [specific product/area].<br/><br/>
+              If you have a few minutes, I'd really appreciate any advice on
+              breaking into PM or, if you feel comfortable, a referral for this
+              role: [link].<br/><br/>
+              Thank you so much,<br/>
+              [Your Name]
+            </p>
+          </div>
+        </div>
+        <div class="col">
+          <ul>
+            <li>Customize 1–2 lines so it doesn’t feel mass-sent.</li>
+            <li>Mention concrete work (Delta, internships, side projects).</li>
+            <li>Lead with curiosity (“advice”) and make referral an option.</li>
+            <li>Track who you reached out to and follow up politely once if needed.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 9: PM Resume -->
+    <section class="slide">
+      <div class="slide-header">
+        <div class="overline">03 · Positioning Yourself</div>
+        <h2>Building a PM-Ready Resume</h2>
+        <p class="subtitle">
+          Your resume should read like a story about someone who can own
+          problems, prioritize, and drive measurable impact.
+        </p>
+      </div>
+      <div class="content">
+        <div class="col">
+          <div class="card">
+            <div class="card-title">Format & Structure</div>
+            <ul>
+              <li>One page, black-and-white, ATS-friendly (LaTeX, GDocs, or Word — no Canva art projects).</li>
+              <li>No fluff sections (objective, hobbies) unless they add signal.</li>
+              <li>Use XYZ format: "Did X, using Y, resulting in Z."</li>
+              <li>Example: "Led user research with 15+ students and synthesized findings into a prioritized feature spec, increasing beta sign-ups by 30% in 4 weeks."</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <div class="card-title">What to Emphasize</div>
+            <ul>
+              <li><strong>Customer & problem understanding:</strong> user research, surveys, interviews.</li>
+              <li><strong>Prioritization & decision-making:</strong> what you chose not to do.</li>
+              <li><strong>Data & metrics:</strong> A/B tests, dashboards, KPIs.</li>
+              <li><strong>Cross-functional work:</strong> collaborating with eng/design/ops/marketing.</li>
+              <li><strong>Technical skills:</strong> SQL, data analysis, scripting, Figma, analytics (Amplitude, GA, Looker).</li>
+              <li>Every bullet should answer: "How did this change the world even a tiny bit?"</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 10: LinkedIn -->
+    <section class="slide">
+      <div class="slide-header">
+        <div class="overline">03 · Positioning Yourself</div>
+        <h2>LinkedIn as Your PM Landing Page</h2>
+        <p class="subtitle">
+          Recruiters and PMs will stalk your LinkedIn. Make it a clear snapshot
+          of who you are and what you ship.
+        </p>
+      </div>
+      <div class="content">
+        <div class="col">
+          <div class="card">
+            <div class="card-title">Profile Optimization</div>
+            <ul>
+              <li><strong>Headline:</strong> "Aspiring Product Manager | [Major] @ Berkeley | Delta Consulting PM" — go beyond "Student @ Berkeley".</li>
+              <li><strong>About:</strong> 3–6 sentences hitting your background (major, interests), product interests (AI tools, edtech, fintech, consumer social), and concrete PM-ish experiences (Delta, internships, side projects).</li>
+              <li><strong>Experience:</strong> mirror your resume but can be slightly more narrative, add context and outcomes.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <div class="card-title">Skills & Featured</div>
+            <ul>
+              <li><strong>Skills:</strong> add PM-relevant skills: product management, SQL, data analysis, A/B testing, Figma, user research, roadmapping, etc.</li>
+              <li><strong>Featured:</strong> link to portfolio/slides for a product case, Delta projects, Medium posts or Substack about product breakdowns (optional but powerful).</li>
+              <li>Keep it aligned with your PM narrative — recruiters and PMs absolutely use LinkedIn to find junior PMs.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 11: Delta as PM Experience -->
+    <section class="slide">
+      <div class="slide-header">
+        <div class="overline">04 · Delta Consulting</div>
+        <h2>Turning Delta Work into PM Experience</h2>
+        <p class="subtitle">
+          Delta is basically a mini PM incubator if you frame it correctly.
+        </p>
+      </div>
+      <div class="content">
+        <div class="col">
+          <div class="card">
+            <div class="card-title">On Your Resume</div>
+            <ul>
+              <li>Title as: "Product Manager / Product Lead" (if you were PM) or "Product Analyst / Product Consultant" (if you were more IC side).</li>
+              <li><strong>Problem discovery:</strong> "Interviewed X users/stakeholders to identify Y pain point."</li>
+              <li><strong>Solution design:</strong> "Defined product requirements for Z feature/workflow."</li>
+              <li><strong>Execution:</strong> "Managed backlog, ran weekly standups, coordinated with designers/engineers."</li>
+              <li><strong>Impact:</strong> "Drove 20% increase in [metric] / piloted feature with [N] customers."</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <div class="card-title">For Non-Tech Projects</div>
+            <ul>
+              <li>Market research → strategic recommendation.</li>
+              <li>Experiment design (surveys, experiments, pricing tests).</li>
+              <li>Dashboards or tooling you helped design.</li>
+              <li>Any "we prototyped a feature in Figma / Notion / Sheets / Looker".</li>
+              <li>Always end bullets with measured or estimated impact.</li>
+              <li>Show that you can take a messy business problem, structure it, choose a direction, and measure success.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 12: Using Delta in Interviews -->
+    <section class="slide">
+      <div class="slide-header">
+        <div class="overline">04 · Delta Consulting</div>
+        <h2>Using Delta Projects in PM Interviews</h2>
+      </div>
+      <div class="content">
+        <div class="col">
+          <ul>
+            <li>“Tell me about a product you worked on” → use a Delta project.</li>
+            <li>“Tell me about a time you managed stakeholders” → client + internal team dynamics.</li>
+            <li>“Tell me about a time you prioritized features” → your roadmap choices.</li>
+          </ul>
+        </div>
+        <div class="col">
+          <div class="card">
+            <div class="card-title">Opening Example</div>
+            <p style="font-size:1.05rem; line-height:1.7;">
+              "At Berkeley, I'm part of a consulting organization called Delta
+              Consulting, where we work with industry partners over 8–12 weeks.
+              This semester I acted as the [Product Manager/Product Analyst] for
+              [COMPANY], where our goal was to [objective]."
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 13: PM Interview Buckets -->
+    <section class="slide">
+      <div class="slide-header">
+        <div class="overline">06 · Interview Prep</div>
+        <h2>The Four Big PM Interview Buckets</h2>
+      </div>
+      <div class="content two-column-list">
+        <div class="card">
+          <div class="card-title">Product Sense / Design</div>
+          <ul>
+            <li>Design X for Y users.</li>
+            <li>Improve an existing product or feature.</li>
+            <li>Show user empathy + structured thinking.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title">Execution &amp; Metrics</div>
+          <ul>
+            <li>Debug metric drops.</li>
+            <li>Define success metrics &amp; guardrails.</li>
+            <li>React to A/B test outcomes.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title">Estimation &amp; Strategy</div>
+          <ul>
+            <li>Back-of-the-envelope market sizing.</li>
+            <li>Launch / no-launch decisions.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title">Behavioral</div>
+          <ul>
+            <li>Leadership without authority.</li>
+            <li>Conflict, ambiguity, failures, learning.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 14: Product Sense Practice -->
+    <section class="slide">
+      <div class="slide-header">
+        <div class="overline">06 · Interview Prep</div>
+        <h2>Product Sense: How to Practice</h2>
+        <p class="subtitle">
+          Classic "design X for Y users" questions. Interviewers want structured thinking, user empathy, and trade-offs, not just "cool ideas."
+        </p>
+      </div>
+      <div class="content">
+        <div class="col">
+          <div class="card">
+            <div class="card-title">Practice Flow</div>
+            <ul>
+              <li><strong>1. Clarify the goal & constraints</strong> — "Is the goal to maximize engagement, revenue, or something else?"</li>
+              <li><strong>2. Define users & prioritize 1–2 primary personas</strong> — "Which user segment should I prioritize?"</li>
+              <li><strong>3. List their top needs / pain points</strong> — prioritize a few key user needs before jumping to features.</li>
+              <li><strong>4. Propose candidate solutions</strong> and pick one.</li>
+              <li><strong>5. Walk through the user journey</strong> — end-to-end experience.</li>
+              <li><strong>6. Define success metrics</strong> — how will you measure impact?</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <div class="card-title">Practice Strategy</div>
+            <ul>
+              <li>Use a framework (e.g., CIRCLES from Decode and Conquer) to stay structured.</li>
+              <li>Do 2–3 product design prompts per week out loud.</li>
+              <li>Trade prompts with friends or other PM candidates.</li>
+              <li>Record yourself answering 2–3 questions — you'll hear your own rambling.</li>
+              <li>Focus less on "clever" features, more on reasoning and trade-offs.</li>
+              <li>Examples: "Design a product to help college students find internships" or "How would you improve Instagram Stories for creators?"</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <p class="hint">Your interviewer cares more about your thinking than your final feature list.</p>
+    </section>
+
+    <!-- Slide 15: Execution & Metrics -->
+    <section class="slide">
+      <div class="slide-header">
+        <div class="overline">06 · Interview Prep</div>
+        <h2>Execution &amp; Metrics: Operating a Live Product</h2>
+        <p class="subtitle">
+          Execution questions test how you'd operate a live product. Know your north star metrics, guardrails, and how to form hypotheses.
+        </p>
+      </div>
+      <div class="content">
+        <div class="col">
+          <div class="card">
+            <div class="card-title">What to Learn</div>
+            <ul>
+              <li>Basic growth and engagement metrics: DAU/MAU, retention, activation, funnel conversion, churn.</li>
+              <li>Practice "metric drop" questions: "DAU dropped 10% overnight — what do you do?"</li>
+              <li>Structured debugging flow: check instrumentation, segment affected users, look at recent changes/launches, consider seasonality/external factors.</li>
+              <li>Connect experiments → hypotheses → decisions.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <div class="card-title">Practice Questions</div>
+            <ul>
+              <li>"What metrics would you track for a new notifications system?"</li>
+              <li>"Feature X did worse in A/B testing than the control; how do you respond?"</li>
+              <li>Use your Delta and class projects to think: "if this were live, how would I measure success?"</li>
+              <li>Be explicit about trade-offs when choosing metrics.</li>
+              <li>Define success metrics & guardrails for any feature you design.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 16: Behavioral / STAR -->
+    <section class="slide">
+      <div class="slide-header">
+        <div class="overline">07 · Behavioral Strategy</div>
+        <h2>Telling PM Stories With STAR</h2>
+        <p class="subtitle">
+          Behavioral interviews test whether you can lead, learn, and collaborate
+          under ambiguity — basically, if they'd trust you in front of users and
+          stakeholders.
+        </p>
+      </div>
+      <div class="content">
+        <div class="col">
+          <div class="card">
+            <div class="card-title">Preparation Strategy</div>
+            <ul>
+              <li>Prepare 5–6 core stories: background, challenge, failure, leadership, conflict.</li>
+              <li>Use STAR: Situation, Task, Action, Result — keep stories concise and outcome-focused.</li>
+              <li>Tilt your stories toward: ambiguity (problem wasn't clearly defined), stakeholder management (conflicting asks), leadership without title, learning from failure.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <div class="card-title">Story Sources & What They Want</div>
+            <ul>
+              <li>Delta is a goldmine for PM behaviorals: client conflicts, scope changes, research surprises, team dynamics.</li>
+              <li>Group projects, internships, teaching, club leadership, hackathons — anywhere you took initiative.</li>
+              <li>What PM interviewers want: can you structure your story? Do you show ownership vs "I just helped"? Do you learn from mistakes? Would they trust you to talk to users, executives, and engineers?</li>
+              <li>Practice answering out loud until it sounds natural, not memorized.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 17: During the Interview -->
+    <section class="slide">
+      <div class="slide-header">
+        <div class="overline">08 · During the Interview</div>
+        <h2>In the Room: How to Show Up Like a PM</h2>
+        <p class="subtitle">
+          PM interviews can be 45–60 minutes of product/execution/estimation, 30–45 minutes behavioral, or sometimes a take-home case.
+        </p>
+      </div>
+      <div class="content">
+        <div class="col">
+          <div class="card">
+            <div class="card-title">During the Interview</div>
+            <ul>
+              <li><strong>Clarify the question</strong> — especially in product sense: "Is the goal to maximize engagement, revenue, or something else?" "Which user segment should I prioritize?"</li>
+              <li><strong>Narrate your thinking</strong> as if you're walking a teammate through your reasoning.</li>
+              <li><strong>Be explicit</strong> about trade-offs and assumptions.</li>
+              <li>If you've seen a question before, it's your call ethically whether to say so — but don't sound over-rehearsed.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <div class="card-title">Closing & Pacing</div>
+            <ul>
+              <li>Use the last minutes to ask thoughtful questions: "At [Company], how do PMs usually work with designers/engineers?" "What does success in this role look like after 6 months?"</li>
+              <li>Watch your pacing: don't ramble, don't give 3 answers to 1 question.</li>
+              <li>Remember: they're evaluating collaboration as much as correctness — let it feel like a live, thoughtful conversation.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 18: Follow Up -->
+    <section class="slide">
+      <div class="slide-header">
+        <div class="overline">09 · After the Interview</div>
+        <h2>Following Up & Learning From Each Round</h2>
+      </div>
+      <div class="content">
+        <div class="col">
+          <div class="card">
+            <div class="card-title">Thank You & Follow-Up</div>
+            <ul>
+              <li>Optional: send a thank-you email within 24 hours.</li>
+              <li>Reference something specific from the conversation (a metric, feature, or product philosophy you liked).</li>
+              <li>Reaffirm interest in the role and team.</li>
+              <li>Example: "Thanks again for the conversation about how your team prioritizes features for [PRODUCT]."</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <div class="card-title">If Rejected</div>
+            <ul>
+              <li>Respond with gratitude and, if appropriate, ask for feedback.</li>
+              <li>Express interest in future PM / APM cycles: "I'd love any feedback you can share, and I'd be excited to stay in touch for future PM roles."</li>
+              <li>Log what went well, what didn't, and adjust your prep.</li>
+              <li>Use rejection actively: Did I freeze on product sense? → more mocks. Did I get vague feedback like "not enough structure"? → tighten your frameworks.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 19: Stress & Rejection -->
+    <section class="slide">
+      <div class="slide-header">
+        <div class="overline">10 · Handling Stress</div>
+        <h2>Staying Sane Through the PM Blender</h2>
+        <p class="subtitle">
+          PM recruiting can feel even more random than SWE. There are fewer seats, and most people are breaking in from non-traditional backgrounds.
+        </p>
+      </div>
+      <div class="content">
+        <div class="col">
+          <div class="card">
+            <div class="card-title">Mindset</div>
+            <ul>
+              <li>Define your own journey — timing is random, your worth isn't.</li>
+              <li>Celebrate every small win: first PM coffee chat, first APM application, first PM interview, referral.</li>
+              <li>Use rejection as data, not a verdict on your ability.</li>
+              <li>Keep perspective: you're building a career story, not just "did I get Google APM this year."</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <div class="card-title">Practical Tips</div>
+            <ul>
+              <li>Set recruiting hours so it doesn't eat your entire life.</li>
+              <li>Make space for rest, movement, and friends.</li>
+              <li>Remember: sometimes it truly is just headcount and timing, not your worth.</li>
+              <li>Many PMs failed multiple cycles before landing their first role — it's a marathon, not a sprint.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 20: Offers & Negotiation -->
+    <section class="slide">
+      <div class="slide-header">
+        <div class="overline">11 · Offers & Negotiation</div>
+        <h2>Evaluating PM Offers Beyond Just TC</h2>
+        <p class="subtitle">
+          Most PM offers follow the same structure as SWE: base salary, signing bonus, equity (more common for full-time APM roles), start date/location/relocation.
+        </p>
+      </div>
+      <div class="content">
+        <div class="col">
+          <div class="card">
+            <div class="card-title">What to Weigh</div>
+            <ul>
+              <li><strong>Learning & mentorship</strong> — APM programs with rotations, bootcamps, and strong coaching are worth a lot for your first PM role.</li>
+              <li><strong>Product area</strong> — Are you excited about the problem space (consumer, B2B, infra, AI, etc.)?</li>
+              <li><strong>Team culture</strong> — Do PMs actually get to own decisions, or are they glorified project managers?</li>
+              <li><strong>Location & lifestyle</strong> — SF/NY vs remote, cost of living, your support system.</li>
+              <li><strong>Total compensation</strong> — Yes, money matters, but don't optimize only for TC at the expense of growth in your first PM job.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <div class="card-title">Negotiation</div>
+            <ul>
+              <li>Negotiate respectfully: ask clarifying questions, share competing offers truthfully, and ask if there's any flexibility.</li>
+              <li>Ask once you have all details in writing — worst case they say no.</li>
+              <li>Many PMs recommend at least asking once — you'd be surprised how often there's flexibility.</li>
+              <li>Optimize for long-term growth, not just first-year comp.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 21: Network & Community -->
+    <section class="slide">
+      <div class="slide-header">
+        <div class="overline">12 · Support System</div>
+        <h2>Building a PM-Supportive Network</h2>
+      </div>
+      <div class="content">
+        <div class="col">
+          <div class="card">
+            <div class="card-title">Your Network</div>
+            <ul>
+              <li>Tap into Delta, HKN, UPE, other clubs — there's always someone 1–2 years ahead of you who has gone through PM recruiting.</li>
+              <li>Use Slack/Discord / r/ProductManagement and similar communities, but filter out the doom-posting.</li>
+              <li>Go to talks / panels by PMs: APMSeason, Leland, Product School, Exponent often host free webinars.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <div class="card-title">How to Engage</div>
+            <ul>
+              <li>Share resources, mock each other, and celebrate wins together.</li>
+              <li>Filter out toxic comparison — especially on anonymous forums.</li>
+              <li>You're not meant to do PM recruiting in isolation — ask upperclassmen, alums, and current PMs for help.</li>
+              <li>A shocking number of them are happy to give back — don't be afraid to reach out.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 22: Resource Summary -->
+    <section class="slide">
+      <div class="slide-header">
+        <div class="overline">14 · Resources</div>
+        <h2>PM Recruiting Resource Stack</h2>
+      </div>
+      <div class="content">
+        <div class="col">
+          <div class="card">
+            <div class="card-title">Finding Roles</div>
+            <ul>
+              <li><strong>APM List (by Exponent)</strong> — curated list of APM programs & entry-level PM roles.</li>
+              <li><strong>APM Season</strong> — tracks 2025–2026 APM internships & full-time roles.</li>
+              <li><strong>Simplify / Leland</strong> — "Top APM Programs" collections.</li>
+              <li>LinkedIn &amp; alumni networks for referrals.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-title">Interview Prep Platforms</div>
+            <ul>
+              <li><strong>Exponent</strong> — PM courses + real question bank + mock interviews.</li>
+              <li><strong>Product Alliance</strong> — company-specific PM interview prep + updated question lists.</li>
+              <li>PMExercises, IGotAnOffer PM interview guides.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <div class="card-title">Books & Guides</div>
+            <ul>
+              <li><strong>Cracking the PM Interview</strong> — comprehensive overview of PM roles + recruiting + interview formats.</li>
+              <li><strong>Decode and Conquer</strong> — deep dive into PM interview frameworks, especially product design (CIRCLES) + estimation/metrics.</li>
+              <li><strong>Lenny's Newsletter</strong> — practical breakdown of PM interview prep.</li>
+              <li>Meta RPM / Google APM interview guides — detailed breakdowns of their processes.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-title">Your Assets</div>
+            <ul>
+              <li>Delta projects as your core PM case studies.</li>
+              <li>Friends, mentors, and community as your support system.</li>
+              <li>Mock interviews with friends or other Delta members.</li>
+              <li>Record yourself answering questions — you'll hear your own rambling.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <p class="hint">You don't have to use everything — start with 2–3 resources and go deep.</p>
+    </section>
+
+    <!-- Slide 23: Closing -->
+    <section class="slide">
+      <div class="slide-header">
+        <div class="overline">15 · Conclusion</div>
+        <h2>You Can 100% Break Into PM</h2>
+        <p class="subtitle">
+          You already have more PM-adjacent experience than you think. This is
+          just about telling the story clearly and repeatedly.
+        </p>
+      </div>
+      <div class="content">
+        <div class="col">
+          <ul>
+            <li>Turn your work (Delta, projects, internships) into PM narratives.</li>
+            <li>Build a consistent system for finding roles and doing outreach.</li>
+            <li>Practice product sense, execution, and behavioral until you sound like yourself — just sharper.</li>
+          </ul>
+        </div>
+        <div class="col">
+          <ul>
+            <li>Lean on your community. Ask for mocks, reviews, and feedback.</li>
+            <li>Define your own version of success each cycle.</li>
+            <li>Keep iterating. That’s literally what PMs do.</li>
+          </ul>
+        </div>
+      </div>
+      <p class="hint">
+        Next steps: customize these slides with your examples, then host it as a
+        mini site or workshop deck.
+      </p>
+    </section>
+
+    <!-- Navigation -->
+    <div class="nav">
+      <div class="tagline">
+        Delta Consulting · PM Recruiting Guide · Use ← → to navigate
+      </div>
+      <div class="progress">
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <span class="slide-count" id="slide-count">1 / 23</span>
+      </div>
+      <div class="nav-buttons">
+        <button class="nav-btn" id="prev-btn" disabled>
+          <span class="icon">←</span> Prev
+        </button>
+        <button class="nav-btn" id="next-btn">
+          Next <span class="icon">→</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    const prevBtn = document.getElementById("prev-btn");
+    const nextBtn = document.getElementById("next-btn");
+    const slideCountEl = document.getElementById("slide-count");
+    const progressFill = document.getElementById("progress-fill");
+
+    let current = 0;
+
+    function updateSlides() {
+      slides.forEach((s, i) => {
+        s.classList.toggle("active", i === current);
+      });
+
+      prevBtn.disabled = current === 0;
+      nextBtn.disabled = current === slides.length - 1;
+
+      slideCountEl.textContent = `${current + 1} / ${slides.length}`;
+      const pct = ((current + 1) / slides.length) * 100;
+      progressFill.style.width = pct + "%";
+    }
+
+    function goNext() {
+      if (current < slides.length - 1) {
+        current++;
+        updateSlides();
+      }
+    }
+
+    function goPrev() {
+      if (current > 0) {
+        current--;
+        updateSlides();
+      }
+    }
+
+    nextBtn.addEventListener("click", goNext);
+    prevBtn.addEventListener("click", goPrev);
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight") goNext();
+      if (e.key === "ArrowLeft") goPrev();
+    });
+
+    updateSlides();
+  </script>
+</body>
+</html>

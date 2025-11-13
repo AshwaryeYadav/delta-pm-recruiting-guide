@@ -1,0 +1,20 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.DS_Store
+*.swp
+*.swo
+*~
+
+# Keep only the PM guide files
+# banking_system*.py
+# in_memory_db_impl.py
+# test_*.py
+
