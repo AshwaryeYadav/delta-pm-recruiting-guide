@@ -319,6 +319,43 @@
       margin-right: 0.5rem;
     }
 
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+      font-size: 0.95rem;
+    }
+
+    th, td {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 224, 138, 0.3);
+    }
+
+    th {
+      background: rgba(0, 149, 122, 0.5);
+      color: var(--accent);
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+    }
+
+    tr:hover {
+      background: rgba(0, 149, 122, 0.2);
+    }
+
+    td {
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .table-container {
+      overflow-x: auto;
+      margin-top: 1rem;
+    }
+
     /* President intro slide */
 
     .president-slide {
@@ -435,8 +472,6 @@
               <li>A student-focused playbook for PM recruiting.</li>
               <li>Based on real experiences, not just theory.</li>
               <li>Designed for APM, PM intern, and early-career PM roles.</li>
-              <li>For anyone feeling like the process is confusing, gate-kept, or "reserved" for people with magical backgrounds.</li>
-              <li>This is not a perfect, official playbook — it's a consolidation of what works.</li>
             </ul>
           </div>
         </div>
@@ -448,8 +483,6 @@
               <li>Turn Delta &amp; project work into PM-ready experience.</li>
               <li>Position your resume, LinkedIn, and Delta work for PM roles.</li>
               <li>Prep for product sense, execution, and behavioral rounds.</li>
-              <li>Handle stress, rejection, and offers strategically.</li>
-              <li>Build a supportive network and stay sane through the chaos.</li>
             </ul>
           </div>
         </div>
@@ -492,126 +525,192 @@
       </p>
     </section>
 
-    <!-- Slide 4: Landscape & Reality -->
+    <!-- Slide 4: Different Types of Roles -->
     <section class="slide">
       <div class="slide-header">
         <div class="overline">01 · Role Overview</div>
-        <h2>The Reality of PM Recruiting</h2>
-        <p class="subtitle">
-          PM roles are fewer and more opaque than SWE, but you don't need a
-          "perfect" background. You need a clear story and proof you can own
-          problems and drive outcomes.
-        </p>
+        <h2>Different Types of Roles</h2>
+      </div>
+      <div class="content">
+        <div class="col" style="flex: 1 1 100%;">
+          <div class="card">
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Role Level</th>
+                    <th>Main Focus</th>
+                    <th>Typical Background</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>PM Intern</strong></td>
+                    <td>Learn PM, support PMs</td>
+                    <td>Student (often CS, business, or design)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>APM</strong></td>
+                    <td>Entry-level - Manage small features, learn PM craft</td>
+                    <td>New grads or career switchers</td>
+                  </tr>
+                  <tr>
+                    <td><strong>PM</strong></td>
+                    <td>Mid-level - Product strategy, roadmap, execution</td>
+                    <td>2–6 years PM or related experience</td>
+                  </tr>
+                  <tr>
+                    <td><strong>TPM</strong></td>
+                    <td>Mid/mid-senior - Technical execution, cross-team coordination</td>
+                    <td>Strong engineering background</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 4b: Hiring Assessment Questions -->
+    <section class="slide">
+      <div class="slide-header">
+        <div class="overline">01 · Role Overview</div>
+        <h2>Example of Hiring Assessment Questions</h2>
       </div>
       <div class="content">
         <div class="col">
           <div class="card">
-            <div class="card-title">The Challenge</div>
-            <ul>
-              <li>APM / PM intern seats are limited and competitive.</li>
-              <li>Titles vary: APM, RPM, PM intern, Rotational PM, Product Fellow, etc.</li>
-              <li>PM recruiting is way more opaque than SWE — fewer roles, weird titles.</li>
-              <li>Most PMs break in from other roles (SWE, design, consulting, etc.).</li>
-              <li>This is even more of a numbers + timing game than SWE.</li>
+            <div class="card-title">Question Type A</div>
+            <p style="margin-bottom: 1rem; line-height: 1.6;">
+              I am decisive even when the outcome is uncertain
+            </p>
+            <ul style="margin-top: 0.5rem;">
+              <li>Strongly Disagree</li>
+              <li>Disagree</li>
+              <li>Neutral</li>
+              <li>Agree</li>
+              <li>Strongly Agree</li>
             </ul>
           </div>
         </div>
         <div class="col">
           <div class="card">
-            <div class="card-title">Your Strategy</div>
-            <ul>
-              <li>Your goal: show <span class="inline-accent">PM-ish work</span>, not just PM titles.</li>
-              <li>Delta, side projects, internships → all can be packaged as product experience.</li>
-              <li>Companies care that you've done PM-ish work, not what it was called.</li>
-              <li>Examples: owned a feature/roadmap, led research→prototype→launch, ran user interviews, prioritized backlog items.</li>
-              <li>This guide helps you translate what you've already done.</li>
+            <div class="card-title">Question Type B</div>
+            <p style="margin-bottom: 1rem; line-height: 1.6;">
+              As a sales employee, your company's annual sales goal deadline is coming up soon, and you still have not met your goal. You notice an error in the tracking system which shows that you contacted a client that your coworker actually contacted instead. With this client counted, your goal would be reached.
+            </p>
+            <p style="margin-top: 1rem; font-weight: 600; color: var(--accent);">
+              Which action would you be MOST likely to take in response?
+            </p>
+            <ul style="margin-top: 0.75rem;">
+              <li>A. Ask your manager if you could lower your sales goal for this year.</li>
+              <li>B. Inform your manager of the error that you discovered in the system.</li>
+              <li>C. Count the credit towards your goal, since you did not intentionally create the error.</li>
+              <li>D. Ask your manager whether it would be possible to extend the deadline for the goal.</li>
             </ul>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Slide 5: Finding Roles -->
+    <!-- Slide 4c: PM Recruiting Timeline -->
     <section class="slide">
       <div class="slide-header">
         <div class="overline">02 · Finding Opportunities</div>
-        <h2>Where PM / APM Roles Actually Live</h2>
+        <h2>PM Recruiting Timeline</h2>
         <p class="subtitle">
-          PM jobs hide behind confusing titles and random portals. Set up a
-          system so you're not relying on luck.
+          Most PM internship applications open between July and September, with interviews happening from August through November, and offers typically extended by November or December, while some startups continue hiring into early next year.
         </p>
       </div>
       <div class="content">
-        <div class="col">
+        <div class="col" style="flex: 1 1 100%;">
           <div class="card">
-            <div class="card-title">Core Sources</div>
-            <ul>
-              <li><strong>APM List (by Exponent)</strong> — curated list of APM programs & entry-level PM roles.</li>
-              <li><strong>APM Season</strong> — tracks 2025–2026 APM internships & full-time roles with open/closed status.</li>
-              <li><strong>Simplify / Leland</strong> — "Top APM Programs" collections you can filter.</li>
-              <li>Company career pages for "Associate Product Manager," "PM Intern," etc.</li>
-              <li>LinkedIn + Handshake with PM-specific filters.</li>
-            </ul>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card">
-            <div class="card-title">Tactics</div>
-            <ul>
-              <li>Treat these like SWE GitHub internship lists: open them daily/weekly during season.</li>
-              <li>Apply to anything that says: APM, RPM, Product Manager – New Grad, PM Intern.</li>
-              <li>Build a shortlist of 20–40 target companies where you like the product.</li>
-              <li>Check their career pages weekly or set alerts.</li>
-              <li>Track roles in a simple spreadsheet (status, deadline, contacts).</li>
-              <li><strong>Goal:</strong> A recurring habit of checking these like you'd check social media.</li>
-            </ul>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Company</th>
+                    <th>App Opens</th>
+                    <th>Interviews</th>
+                    <th>Offers</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Google</strong></td>
+                    <td>Aug</td>
+                    <td>Sep–Oct</td>
+                    <td>Oct–Nov</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Meta</strong></td>
+                    <td>Aug–Sep</td>
+                    <td>Sep–Oct</td>
+                    <td>Oct–Nov</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Microsoft</strong></td>
+                    <td>Aug–Sep</td>
+                    <td>Sep–Nov</td>
+                    <td>Nov–Dec</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Amazon</strong></td>
+                    <td>Jul–Aug</td>
+                    <td>Aug–Oct</td>
+                    <td>Oct–Nov</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Salesforce</strong></td>
+                    <td>Jul–Aug</td>
+                    <td>Aug–Oct</td>
+                    <td>Oct–Nov</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Uber</strong></td>
+                    <td>Sep–Oct</td>
+                    <td>Oct–Nov</td>
+                    <td>Nov–Dec</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Lyft</strong></td>
+                    <td>Sep</td>
+                    <td>Sep–Oct</td>
+                    <td>Oct–Nov</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Adobe</strong></td>
+                    <td>Late Aug–Sep</td>
+                    <td>Sep–Oct</td>
+                    <td>Oct–Nov</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Intuit</strong></td>
+                    <td>Aug–Sep</td>
+                    <td>Sep–Oct</td>
+                    <td>Oct–Nov</td>
+                  </tr>
+                  <tr>
+                    <td><strong>PayPal</strong></td>
+                    <td>Sep</td>
+                    <td>Oct–Nov</td>
+                    <td>Nov–Dec</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Startups</strong></td>
+                    <td>Sep–Jan (varies)</td>
+                    <td>Rolling</td>
+                    <td>Rolling</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Slide 6: APM Programs -->
-    <section class="slide">
-      <div class="slide-header">
-        <div class="overline">02 · Finding Opportunities</div>
-        <h2>Flagship APM Programs</h2>
-        <p class="subtitle">
-          The "big name" programs are great, but they're not the only path into PM.
-        </p>
-      </div>
-      <div class="content">
-        <div class="col">
-          <div class="card">
-            <div class="card-title">Major Programs</div>
-            <ul>
-              <li><strong>Google APM</strong> — 2-year rotational program; classic new-grad PM track.</li>
-              <li><strong>Meta RPM</strong> — 18-month rotational program with 3 rotations, bootcamp, and often a global trip.</li>
-              <li><strong>Uber, LinkedIn, Salesforce, Figma, Duolingo APM</strong> — similar early-career programs with rotations, mentorship, and structured training.</li>
-              <li>Typically 18–24 month rotational programs with intense mentorship.</li>
-            </ul>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card">
-            <div class="card-title">Reality Check</div>
-            <ul>
-              <li>These are insanely competitive — APM is multiple-x harder than SWE to break into.</li>
-              <li>Many APM programs have tiny headcounts but thousands of applicants.</li>
-              <li>Don't measure your worth only by these programs.</li>
-              <li>Your strategy: apply broadly, not just to famous APM programs.</li>
-              <li>Remember: most PMs break in from other roles, not directly from APM programs.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="pill-row">
-        <span class="pill">APM</span>
-        <span class="pill">Rotational PM</span>
-        <span class="pill">PM Intern</span>
-        <span class="pill">New-Grad PM</span>
-        <span class="pill">Product Fellow</span>
-      </div>
-    </section>
 
     <!-- Slide 7: Referrals -->
     <section class="slide">
